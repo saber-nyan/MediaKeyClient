@@ -1,3 +1,19 @@
+/******************************************************************************
+ * Copyright 2019 saber-nyan                                                  *
+ *                                                                            *
+ * Licensed under the Apache License, Version 2.0 (the "License");            *
+ * you may not use this file except in compliance with the License.           *
+ * You may obtain a copy of the License at                                    *
+ *                                                                            *
+ *     http://www.apache.org/licenses/LICENSE-2.0                             *
+ *                                                                            *
+ * Unless required by applicable law or agreed to in writing, software        *
+ * distributed under the License is distributed on an "AS IS" BASIS,          *
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.   *
+ * See the License for the specific language governing permissions and        *
+ * limitations under the License.                                             *
+ ******************************************************************************/
+
 package ru.sabernyan.mediakeyclient
 
 import android.animation.LayoutTransition
@@ -45,8 +61,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 prefs?.edit()
-                        ?.putString(prefKeyServerAddress, p0.toString())
-                        ?.apply()
+                    ?.putString(prefKeyServerAddress, p0.toString())
+                    ?.apply()
             }
         })
         textInputEditText_token.addTextChangedListener(object : TextWatcher {
@@ -54,8 +70,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 prefs?.edit()
-                        ?.putString(prefKeyToken, p0.toString())
-                        ?.apply()
+                    ?.putString(prefKeyToken, p0.toString())
+                    ?.apply()
             }
         })
 
@@ -79,24 +95,26 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 else -> return
             }
             val keyBase64 = Base64.encodeToString(byteArrayOf(keyByte.toByte()), Base64.NO_WRAP)
-            val jsonOut = JSONObject(mapOf(
+            val jsonOut = JSONObject(
+                mapOf(
                     "token" to textInputEditText_token.text.toString(),
                     "key" to keyBase64
-            )).toString()
+                )
+            ).toString()
             Log.d(tag, "Sending key ${keyByte.toByte()}")
 
             val request = Request.Builder()
-                    .url("${textInputEditText_serverAddress.text}/pressKey/")
-                    .post(jsonOut.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull()))
-                    .build()
+                .url("${textInputEditText_serverAddress.text}/pressKey/")
+                .post(jsonOut.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull()))
+                .build()
             OkHttpClient().newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                     Log.e(tag, "Failed with exception!", e)
                     this@MainActivity.runOnUiThread {
                         Toast.makeText(
-                                this@MainActivity,
-                                "Failed with exception!\n${e.localizedMessage}",
-                                Toast.LENGTH_LONG
+                            this@MainActivity,
+                            "Failed with exception!\n${e.localizedMessage}",
+                            Toast.LENGTH_LONG
                         ).show()
                     }
                 }
@@ -107,9 +125,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                         Log.e(tag, "Server failed: ${responseJson.optString("errorDescription")}")
                         this@MainActivity.runOnUiThread {
                             Toast.makeText(
-                                    this@MainActivity,
-                                    "Server failed: ${responseJson.optString("errorName")}",
-                                    Toast.LENGTH_LONG
+                                this@MainActivity,
+                                "Server failed: ${responseJson.optString("errorName")}",
+                                Toast.LENGTH_LONG
                             ).show()
                         }
                     }
@@ -118,9 +136,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         } catch (e: Exception) {
             Log.e(tag, "Unexpected exception:", e)
             Toast.makeText(
-                    this@MainActivity,
-                    "Unexpected exception!\n${e.localizedMessage}",
-                    Toast.LENGTH_LONG
+                this@MainActivity,
+                "Unexpected exception!\n${e.localizedMessage}",
+                Toast.LENGTH_LONG
             ).show()
         }
     }
