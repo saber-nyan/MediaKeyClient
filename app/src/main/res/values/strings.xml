@@ -1,0 +1,11 @@
+<resources>
+	<string name="app_name">MediaKeyClient</string>
+	<string name="layout_MainActivity_mute">&#128263;</string>
+	<string name="layout_MainActivity_next">&#9197;</string>
+	<string name="layout_MainActivity_playPause">&#9199;</string>
+	<string name="layout_MainActivity_prev">&#9198;</string>
+	<string name="layout_MainActivity_serverAddress">Server address</string>
+	<string name="layout_MainActivity_token">Token</string>
+	<string name="layout_MainActivity_volDown">&#128264;</string>
+	<string name="layout_MainActivity_volUp">&#128266;</string>
+</resources>
