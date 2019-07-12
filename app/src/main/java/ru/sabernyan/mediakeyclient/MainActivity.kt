@@ -17,37 +17,43 @@
 package ru.sabernyan.mediakeyclient
 
 import android.animation.LayoutTransition
+import android.annotation.TargetApi
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.ShortcutInfo
+import android.content.pm.ShortcutManager
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Base64
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import okhttp3.*
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody.Companion.toRequestBody
-import org.json.JSONObject
-import java.io.IOException
 
-class MainActivity : AppCompatActivity(), View.OnClickListener {
+class MainActivity : AppCompatActivity(), View.OnClickListener, View.OnLongClickListener {
     private val tag = this::class.java.simpleName
 
     private var prefs: SharedPreferences? = null
 
     companion object {
-        private const val prefKeyServerAddress = "serverAddress"
-        private const val prefKeyToken = "token"
+        const val prefKeyServerAddress = "serverAddress"
+        const val prefKeyToken = "token"
+        const val prefsName = "MediaKeyClient.nyan"
+
+        const val ACTION_PREV = "mediakey_prev"
+        const val ACTION_PAUSE = "mediakey_pause"
+        const val ACTION_NEXT = "mediakey_next"
+        const val ACTION_VOLDOWN = "mediakey_voldown"
+        const val ACTION_MUTE = "mediakey_mute"
+        const val ACTION_VOLUP = "mediakey_volup"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        prefs = getPreferences(Context.MODE_PRIVATE)
+        prefs = getSharedPreferences(prefsName, Context.MODE_PRIVATE)
 
         val transition = constraintLayout_root.layoutTransition
         transition.enableTransitionType(LayoutTransition.CHANGING)
@@ -81,65 +87,75 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         button_volDown.setOnClickListener(this)
         button_mute.setOnClickListener(this)
         button_volUp.setOnClickListener(this)
+
+        button_prev.setOnLongClickListener(this)
+        button_playPause.setOnLongClickListener(this)
+        button_next.setOnLongClickListener(this)
+        button_volDown.setOnLongClickListener(this)
+        button_mute.setOnLongClickListener(this)
+        button_volUp.setOnLongClickListener(this)
     }
 
     override fun onClick(p0: View?) {
-        try {
-            val keyByte = when (p0?.id) {
-                R.id.button_prev -> 177
-                R.id.button_playPause -> 179
-                R.id.button_next -> 176
-                R.id.button_volDown -> 174
-                R.id.button_mute -> 173
-                R.id.button_volUp -> 175
-                else -> return
-            }
-            val keyBase64 = Base64.encodeToString(byteArrayOf(keyByte.toByte()), Base64.NO_WRAP)
-            val jsonOut = JSONObject(
-                mapOf(
-                    "token" to textInputEditText_token.text.toString(),
-                    "key" to keyBase64
-                )
-            ).toString()
-            Log.d(tag, "Sending key ${keyByte.toByte()}")
-
-            val request = Request.Builder()
-                .url("${textInputEditText_serverAddress.text}/pressKey/")
-                .post(jsonOut.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull()))
-                .build()
-            OkHttpClient().newCall(request).enqueue(object : Callback {
-                override fun onFailure(call: Call, e: IOException) {
-                    Log.e(tag, "Failed with exception!", e)
-                    this@MainActivity.runOnUiThread {
-                        Toast.makeText(
-                            this@MainActivity,
-                            "Failed with exception!\n${e.localizedMessage}",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
+        startService(
+            Intent(this, ConnectivityService::class.java).setAction(
+                when (p0?.id) {
+                    R.id.button_prev -> ACTION_PREV
+                    R.id.button_playPause -> ACTION_PAUSE
+                    R.id.button_next -> ACTION_NEXT
+                    R.id.button_volDown -> ACTION_VOLDOWN
+                    R.id.button_mute -> ACTION_MUTE
+                    R.id.button_volUp -> ACTION_VOLUP
+                    else -> return
                 }
+            )
+        )
+    }
 
-                override fun onResponse(call: Call, response: Response) {
-                    val responseJson = JSONObject(response.body!!.string())
-                    if (!responseJson.optBoolean("success")) {
-                        Log.e(tag, "Server failed: ${responseJson.optString("errorDescription")}")
-                        this@MainActivity.runOnUiThread {
-                            Toast.makeText(
-                                this@MainActivity,
-                                "Server failed: ${responseJson.optString("errorName")}",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                    }
-                }
-            })
-        } catch (e: Exception) {
-            Log.e(tag, "Unexpected exception:", e)
-            Toast.makeText(
-                this@MainActivity,
-                "Unexpected exception!\n${e.localizedMessage}",
-                Toast.LENGTH_LONG
-            ).show()
+    @TargetApi(Build.VERSION_CODES.O)
+    override fun onLongClick(p0: View?): Boolean {
+        val shortcutManager = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            getSystemService(ShortcutManager::class.java)
+        } else {
+            null
         }
+        if (shortcutManager == null || !shortcutManager.isRequestPinShortcutSupported || p0 == null) {
+            Toast.makeText(
+                this,
+                "Shortcuts is not supported...",
+                Toast.LENGTH_SHORT
+            ).show()
+            return true
+        }
+
+        val shortcut = ShortcutInfo.Builder(this, p0.id.toString())
+            .setIntent(
+                Intent(applicationContext, ConnectivityService::class.java).setAction(
+                    when (p0.id) {
+                        R.id.button_prev -> ACTION_PREV
+                        R.id.button_playPause -> ACTION_PAUSE
+                        R.id.button_next -> ACTION_NEXT
+                        R.id.button_volDown -> ACTION_VOLDOWN
+                        R.id.button_mute -> ACTION_MUTE
+                        R.id.button_volUp -> ACTION_VOLUP
+                        else -> return true
+                    }
+                )
+            )
+            .setShortLabel(
+                when (p0.id) {
+                    R.id.button_prev -> ACTION_PREV
+                    R.id.button_playPause -> ACTION_PAUSE
+                    R.id.button_next -> ACTION_NEXT
+                    R.id.button_volDown -> ACTION_VOLDOWN
+                    R.id.button_mute -> ACTION_MUTE
+                    R.id.button_volUp -> ACTION_VOLUP
+                    else -> return true
+                }
+            ) // TODO
+            .build()
+
+        shortcutManager.requestPinShortcut(shortcut, null)
+        return true
     }
 }
