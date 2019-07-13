@@ -29,10 +29,15 @@
 		android:theme="@style/AppTheme"
 		android:usesCleartextTraffic="true"
 		tools:ignore="GoogleAppIndexingWarning">
+
 		<service
 			android:name=".ConnectivityService"
 			android:enabled="true"
-			android:exported="false"></service>
+			android:exported="false" />
+
+		<activity
+			android:name=".TemporaryActivity"
+			android:theme="@style/AppTheme.Transparent" />
 
 		<activity
 			android:name=".MainActivity"
@@ -43,6 +48,6 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-	</application>
 
+	</application>
 </manifest>

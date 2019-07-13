@@ -14,34 +14,21 @@
  * limitations under the License.                                             *
  ******************************************************************************/
 
-buildscript {
-	ext {
-		kotlin_version = '1.3.41'
-	}
-	repositories {
-		google()
-		jcenter()
+package ru.sabernyan.mediakeyclient
 
-	}
-	dependencies {
-		classpath 'com.android.tools.build:gradle:3.5.0-beta05'
-		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-	}
-	configurations.all {
-		resolutionStrategy {
-			// Fix infinite loop bug
-			force 'net.sf.proguard:proguard-gradle:6.1.1'
-		}
-	}
-}
+import android.content.Intent
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 
-allprojects {
-	repositories {
-		google()
-		jcenter()
-	}
-}
+class TemporaryActivity : AppCompatActivity() {
 
-task clean(type: Delete) {
-	delete rootProject.buildDir
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val intent = Intent(this, ConnectivityService::class.java)
+        intent.action = this.intent.action
+        startService(intent)
+
+        finish()
+    }
 }

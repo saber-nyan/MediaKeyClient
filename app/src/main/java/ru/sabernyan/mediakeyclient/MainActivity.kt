@@ -23,6 +23,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.ShortcutInfo
 import android.content.pm.ShortcutManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
@@ -33,8 +34,6 @@ import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener, View.OnLongClickListener {
-    private val tag = this::class.java.simpleName
-
     private var prefs: SharedPreferences? = null
 
     companion object {
@@ -129,8 +128,21 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, View.OnLongClick
         }
 
         val shortcut = ShortcutInfo.Builder(this, p0.id.toString())
+//            .setIntent(
+//                Intent(this, TemporaryActivity::class.java).setAction(
+//                    when (p0.id) {
+//                        R.id.button_prev -> ACTION_PREV
+//                        R.id.button_playPause -> ACTION_PAUSE
+//                        R.id.button_next -> ACTION_NEXT
+//                        R.id.button_volDown -> ACTION_VOLDOWN
+//                        R.id.button_mute -> ACTION_MUTE
+//                        R.id.button_volUp -> ACTION_VOLUP
+//                        else -> return true
+//                    }
+//                )
+//            )
             .setIntent(
-                Intent(applicationContext, ConnectivityService::class.java).setAction(
+                Intent(
                     when (p0.id) {
                         R.id.button_prev -> ACTION_PREV
                         R.id.button_playPause -> ACTION_PAUSE
@@ -139,8 +151,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, View.OnLongClick
                         R.id.button_mute -> ACTION_MUTE
                         R.id.button_volUp -> ACTION_VOLUP
                         else -> return true
-                    }
+                    }, Uri.EMPTY,
+                    this, TemporaryActivity::class.java
                 )
+                    .addFlags(
+                        Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                or Intent.FLAG_ACTIVITY_NEW_TASK
+                    )
             )
             .setShortLabel(
                 when (p0.id) {

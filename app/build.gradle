@@ -31,8 +31,8 @@ android {
 		applicationId "ru.sabernyan.mediakeyclient"
 		minSdkVersion 23
 		targetSdkVersion 29
-		versionCode 101
-		versionName "1.0.2a"
+		versionCode 103
+		versionName "1.0.3a"
 		resConfigs "en", "ru"
 	}
 	buildTypes {
