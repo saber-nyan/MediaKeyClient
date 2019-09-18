@@ -10,4 +10,10 @@
     <string name="MainActivity_layout_Text_currentVolume_unknown" translatable="false">\???%</string>
     <string name="MainActivity_layout_Text_currentSong_unknown">Loading…</string>
     <string name="MainActivity_layout_Image_albumCover">Album cover</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="SettingsActivity_prefs_serverUrl_summary">With port</string>
+    <string name="SettingsActivity_prefs_serverUrl_title">Server URL</string>
+    <string name="SettingsActivity_prefs_serverAccessToken_summary">Token to access remote server with</string>
+    <string name="SettingsActivity_prefs_serverAccessToken_title">Access token</string>
+    <string name="SettingsActivity_prefs_connectivity_title">Connectivity</string>
 </resources>

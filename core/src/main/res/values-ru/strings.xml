@@ -9,4 +9,10 @@
     <string name="MainActivity_layout_Button_volumeUp">Уменьшить громкость</string>
     <string name="MainActivity_layout_Image_albumCover">Обложка</string>
     <string name="MainActivity_layout_Text_currentSong_unknown">Загрузка…</string>
+    <string name="title_activity_settings">Настройки</string>
+    <string name="SettingsActivity_prefs_connectivity_title">Соединение</string>
+    <string name="SettingsActivity_prefs_serverAccessToken_summary">Токен для авторизации на сервере</string>
+    <string name="SettingsActivity_prefs_serverAccessToken_title">Токен доступа</string>
+    <string name="SettingsActivity_prefs_serverUrl_summary">Указывать вместе с портом</string>
+    <string name="SettingsActivity_prefs_serverUrl_title">Адрес сервера</string>
 </resources>
