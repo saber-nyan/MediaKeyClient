@@ -104,7 +104,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
+            android:ems="2"
             android:gravity="end"
+            android:maxEms="2"
             android:minEms="2"
             android:text="@string/MainActivity_layout_Text_currentVolume_unknown"
             android:textSize="14sp" />

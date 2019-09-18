@@ -16,4 +16,10 @@
     <string name="SettingsActivity_prefs_serverAccessToken_summary">Token to access remote server with</string>
     <string name="SettingsActivity_prefs_serverAccessToken_title">Access token</string>
     <string name="SettingsActivity_prefs_connectivity_title">Connectivity</string>
+    <string name="MainActivity_requestFailure_exception">Request failed with exception:\n</string>
+    <string name="MainActivity_requestFailure_json">Got invalid response</string>
+    <string name="MainActivity_layout_Text_currentSong_nothing">Nothing playing</string>
+    <string name="MainActivity_hibernate_confirmation">Are you sure?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

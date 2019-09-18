@@ -15,4 +15,10 @@
     <string name="SettingsActivity_prefs_serverAccessToken_title">Токен доступа</string>
     <string name="SettingsActivity_prefs_serverUrl_summary">Указывать вместе с портом</string>
     <string name="SettingsActivity_prefs_serverUrl_title">Адрес сервера</string>
+    <string name="MainActivity_requestFailure_exception">Запрос завершился с исключенем:\n</string>
+    <string name="MainActivity_requestFailure_json">Не удалось обработать ответ</string>
+    <string name="MainActivity_layout_Text_currentSong_nothing">Плеер не запущен</string>
+    <string name="MainActivity_hibernate_confirmation">Вы уверенны?</string>
+    <string name="no">Нет</string>
+    <string name="yes">Да</string>
 </resources>
