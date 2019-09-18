@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MediaKey</string>
+    <string name="app_name" translatable="false">MediaKey</string>
     <string name="MainActivity_layout_Button_openSettings">Open settings</string>
     <string name="MainActivity_layout_Button_hibernatePc">Hibernate PC</string>
     <string name="MainActivity_layout_Button_volumeDown">Volume down</string>
@@ -7,7 +7,7 @@
     <string name="MainActivity_layout_Button_playPause">Play/Pause</string>
     <string name="MainActivity_layout_Button_next">Next</string>
     <string name="MainActivity_layout_Button_volumeUp">Volume up</string>
-    <string name="MainActivity_layout_Text_currentVolume_unknown">\???%</string>
+    <string name="MainActivity_layout_Text_currentVolume_unknown" translatable="false">\???%</string>
     <string name="MainActivity_layout_Text_currentSong_unknown">Loading…</string>
     <string name="MainActivity_layout_Image_albumCover">Album cover</string>
 </resources>

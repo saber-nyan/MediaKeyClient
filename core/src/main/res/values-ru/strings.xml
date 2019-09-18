@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="MainActivity_layout_Button_hibernatePc">Увести в гибернацию</string>
+    <string name="MainActivity_layout_Button_next">Следующий трек</string>
+    <string name="MainActivity_layout_Button_openSettings">Настройки</string>
+    <string name="MainActivity_layout_Button_playPause">Плей/Пауза</string>
+    <string name="MainActivity_layout_Button_previous">Предыдущий трек</string>
+    <string name="MainActivity_layout_Button_volumeDown">Увеличить громкость</string>
+    <string name="MainActivity_layout_Button_volumeUp">Уменьшить громкость</string>
+    <string name="MainActivity_layout_Image_albumCover">Обложка</string>
+    <string name="MainActivity_layout_Text_currentSong_unknown">Загрузка…</string>
+</resources>
