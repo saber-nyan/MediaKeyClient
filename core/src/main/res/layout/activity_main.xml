@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ImageButton
+        android:id="@+id/Button_openSettings"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="@dimen/space16"
+        android:background="@drawable/bg_rounded"
+        android:contentDescription="@string/MainActivity_layout_Button_openSettings"
+        android:src="@drawable/ic_settings_black_24dp"
+        android:translationZ="8dp" />
+
+    <ImageButton
+        android:id="@+id/Button_hibernatePc"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="@dimen/space16"
+        android:background="@drawable/bg_rounded"
+        android:contentDescription="@string/MainActivity_layout_Button_hibernatePc"
+        android:src="@drawable/ic_hibernate_black_24dp"
+        android:translationZ="8dp" />
+
+    <LinearLayout
+        android:id="@+id/ll_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="32dp"
+        android:orientation="horizontal"
+        android:padding="@dimen/space16"
+        android:weightSum="5">
+
+        <ImageButton
+            android:id="@+id/Button_volDown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@null"
+            android:contentDescription="@string/MainActivity_layout_Button_volumeDown"
+            android:src="@drawable/ic_volume_down_white_24dp" />
+
+        <ImageButton
+            android:id="@+id/Button_prev"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@null"
+            android:contentDescription="@string/MainActivity_layout_Button_previous"
+            android:src="@drawable/ic_previous_white_24dp" />
+
+        <ImageButton
+            android:id="@+id/Button_playPause"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@drawable/bg_rounded"
+            android:contentDescription="@string/MainActivity_layout_Button_playPause"
+            android:src="@drawable/ic_play_black_24dp" />
+
+        <ImageButton
+            android:id="@+id/Button_next"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@null"
+            android:contentDescription="@string/MainActivity_layout_Button_next"
+            android:src="@drawable/ic_next_white_24dp" />
+
+        <ImageButton
+            android:id="@+id/Button_volUp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@null"
+            android:contentDescription="@string/MainActivity_layout_Button_volumeUp"
+            android:src="@drawable/ic_volume_up_white_24dp" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/ll_bottom"
+        android:layout_margin="@dimen/space16">
+
+        <TextView
+            android:id="@+id/TextView_currentVolume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:gravity="end"
+            android:minEms="2"
+            android:text="@string/MainActivity_layout_Text_currentVolume_unknown"
+            android:textSize="14sp" />
+
+        <SeekBar
+            android:id="@+id/ProgressBar_currentVolume"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+
+            android:layout_height="@dimen/space8"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/space16"
+            android:layout_marginRight="@dimen/space16"
+            android:layout_toEndOf="@id/TextView_currentVolume"
+            android:progress="0"
+            android:progressBackgroundTint="#E9E9E9" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/TextView_currentSong"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/rl_progress"
+        android:layout_centerHorizontal="true"
+        android:text="@string/MainActivity_layout_Text_currentSong_unknown"
+        android:textSize="18sp" />
+
+    <ImageView
+        android:id="@+id/ImageView_albumCover"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/TextView_currentSong"
+        android:layout_marginBottom="@dimen/space16"
+
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/MainActivity_layout_Image_albumCover"
+
+        android:scaleType="centerCrop"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+</RelativeLayout>
